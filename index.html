@@ -1,0 +1,269 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>FTC0443 28 August New Season Spring Summer - Digital</title>
+		<script src="js/jquery.min.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+
+	<script>
+
+		$(document).ready(function () {
+
+
+			// Vital variables
+
+			var file_prefix = 'FTC0443_';
+
+
+			// Variables for default banner
+
+			var type = 'html5';
+			var name = '28AUG';
+			var width = 300;
+			var height = 250;
+
+
+			// Main function
+
+			var HTML = '';
+
+			function load_HTML(type, width, height) {
+
+				var file_name = '';
+
+				if (type === 'html5') {
+
+					var file_name = file_prefix + name + '_' + width + 'x' + height + '/index.html';
+
+					// Add the object - note you can add parameters but do check defaults here:
+					// https://helpx.adobe.com/flash/kb/flash-object-embed-tag-attributes.html
+					HTML = '<iframe src="banners/' + file_name + '" width="' + width + '" height="' + height + '" ></iframe>';
+
+					// Set height so the restart button doesn't jump around on restart
+					$('#banner').height(height);
+					$('#banner').width(width);
+
+					// Show restart button (tried removing it with object tag but click function breaks)
+					$('#restart').show();
+
+				} else if (type === 'static') {
+
+					var file_name = file_prefix + name + '_' + width + 'x' + height + '_static.jpg';
+
+					HTML = '<img src="banners/' + file_name + '" height="' + height + '" width="' + width + '" alt="' + file_name + '" />';
+
+					$('#banner').height(height);
+
+					$('#restart').hide();
+
+				} else if (type === 'mobile') {
+
+					var file_name = file_prefix + name + '_' + width + 'x' + height + '_mobile.gif';
+
+					HTML = '<img src="banners/' + file_name + '" height="' + height + '" width="' + width + '" alt="' + file_name + '" />';
+
+					$('#banner').height(height);
+
+					$('#restart').hide();
+
+				} else if (type === 'facebook') {
+
+					var file_name = file_prefix + name + '_' + width + 'x' + height + '_facebook.jpg';
+
+					HTML = '<img src="banners/' + file_name + '" height="600" width="600" alt="' + file_name + '" /><p>50% actual size, <a href="banners/' + file_name + '">click here</a> for full image</p>';
+
+					$('#banner').height(height);
+
+					$('#restart').hide();
+
+				}
+
+				$('#banner').html(HTML);
+
+				$('#restart a').click(function(event) {
+					event.preventDefault();
+					$('#banner').html(HTML);
+				});
+
+				$('#pause a').click(function() {
+
+					var iframe = $('#banner iframe')[0].contentWindow.document;
+					// iframe.gwd.actions.timeline.pause('page1');
+					// iframe.open();
+					// iframe.close();
+					iframe.find('#gwd-ad').before('Test');
+					// iframe.prepend('Test');
+					// $('#banner iframe').unload();
+					// $('#banner iframe').contentWindow.gwd.actions.timeline.pause('page1');
+					// alert('hi');
+				});
+
+			}
+
+
+			// On page load load default banner
+
+			load_HTML(type, width, height);
+
+
+			// Nav buttons
+
+			$('nav li a').click(function(event) {
+				event.preventDefault();
+				type = $(this).data('type');
+				name = $(this).parent().parent().data('name');
+				width = $(this).data('width');
+				height = $(this).data('height');
+				load_HTML(type, width, height);
+				$('nav a.selected').removeClass('selected');
+				$(this).addClass('selected');
+				$('#switch a').text('Static');
+			});
+
+
+			// Static / HTML5 switch button
+
+			$('#switch a').click(function(event) {
+				event.preventDefault();
+				if (type === 'html5') {
+					type = 'static';
+					$(this).text('HTML5');
+					load_HTML(type, width, height);
+				} else {
+					type = 'html5';
+					$(this).text('Static');
+					load_HTML(type, width, height);
+				}
+			});
+
+
+		});
+
+	</script>
+
+	<body>
+
+		<div id="page-area">
+
+			<header>
+
+				<img src="ui/logo.png" alt="Farmers logo" width="115" height="30">
+				<h1>FTC0443 28 August New Season Spring Summer - Digital</h1>
+
+			</header>
+
+			<nav>
+
+				<ul>
+					<li>
+
+						<ul data-name="28AUG">
+			
+							<li><a href="#" class="selected" data-type="html5" data-width="300" data-height="600">300x600</a></li>
+							<li><a href="#" class="selected" data-type="html5" data-width="300" data-height="250">300x250</a></li>
+						</ul>
+<!--
+						<br><br>
+
+						<ul data-name="28AUGART2">
+							GENERIC - 2
+							<li><a href="#" class="selected" data-type="html5" data-width="300" data-height="600">300x600</a></li>
+							<li><a href="#" class="selected" data-type="html5" data-width="300" data-height="250">300x250</a></li>
+						</ul>
+
+						<br><br>
+												<ul data-name="28AUGART3">
+						GENERIC - 3
+						<li><a href="#" class="selected" data-type="html5" data-width="300" data-height="600">300x600</a></li>
+<li><a href="#" class="selected" data-type="html5" data-width="300" data-height="250">300x250</a></li>
+
+												</ul>
+</li><li>
+
+					</li>
+					</li>-->
+					<!--<li>
+						300 x 250
+						<ul data-width="300" data-height="250">
+							<li><a href="#" data-type="mobile">Mobile - animated GIF</a></li>
+						</ul>
+					</li>
+					<li>
+						728 x 90
+						<ul data-width="728" data-height="90">
+							<li><a href="#" data-type="mobile">Mobile - animated GIF</a></li>
+						</ul>
+					</li>
+					<li>
+						The Palms
+						<ul data-name="20-23B">
+							<li><a href="#" data-type="html5" data-width="300" data-height="250">300x250</a></li>
+							<li><a href="#" data-type="html5" data-width="728" data-height="90">728x90</a></li>
+						</ul>
+					</li>
+			<li>	<li>
+						13th to 16th
+						<ul data-name="13-16">
+							<li><a href="#" data-type="html5" data-width="300" data-height="600">300x600</a></li>
+							<li><a href="#" data-type="html5" data-width="300" data-height="250">300x250</a></li>
+						</ul>
+					</li>
+
+				 <li>
+						728 x 90
+						<ul data-width="728" data-height="90">
+							<li><a href="#" data-type="html5">Flash - continuous loop</a></li>
+							<li><a href="#" data-type="html5" data-loop="lim_loop">Flash - limited loop</a></li>
+							<li><a href="#" data-type="static">Flash - JPEG fallback</a></li>
+							<li><a href="#" data-type="mobile">Mobile - animated GIF</a></li>
+						</ul>
+					</li>
+					<li>
+						160 x 600
+						<ul data-width="160" data-height="600">
+							<li><a href="#" data-type="html5">Flash - continuous loop</a></li>
+							<li><a href="#" data-type="html5" data-loop="lim_loop">Flash - limited loop</a></li>
+							<li><a href="#" data-type="static">Flash - JPEG fallback</a></li>
+						</ul>
+					</li>
+					<li>
+						300 x 600
+						<ul data-width="300" data-height="600">
+							<li><a href="#" data-type="html5">Flash - continuous loop</a></li>
+							<li><a href="#" data-type="html5" data-loop="lim_loop">Flash - limited loop</a></li>
+							<li><a href="#" data-type="static">Flash - JPEG fallback</a></li>
+						</ul>
+					</li>
+					<li>
+						1200 x 1200
+						<ul data-width="1200" data-height="1200">
+							<li><a href="#" data-type="facebook">Facebook post</a></li>
+						</ul>
+					</li> -->
+				</ul>
+
+			</nav>
+
+
+			<main>
+
+
+				<div id="banner"></div>
+
+				<p id="restart"><a href="#">Reload</a><br></p>
+				<p id="switch"><a href="#" class="button">Static</a></p>
+				<!-- <p id="pause"><a href="#">Pause</a></p> -->
+
+
+			</main>
+
+			<!-- <p id="dev"></p> -->
+
+		</div>
+
+	</body>
+
+</html>
